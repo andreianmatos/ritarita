@@ -47,9 +47,9 @@
     let frameCounter = 0; 
 
     function preload() {
-      // Load images asynchronously before setup
-      let folderPalavras = 'data/palavras/'; // Adjust folder path as needed
-      let folderPedras = 'data/pedras/'; // Adjust folder path as needed
+      // Load images asynchronously before setup (with repo path)
+      let folderPalavras = '/ritarita/data/palavras/'; 
+      let folderPedras = '/ritarita/data/pedras/'; 
 
       // Load images into imageStack
       loadImagesIntoStack(folderPalavras);
@@ -82,25 +82,20 @@
       fetch(folder)
         .then(response => response.text())
         .then(data => {
-          // Parse the HTML content to extract file names
           let parser = new DOMParser();
           let doc = parser.parseFromString(data, 'text/html');
           let files = [];
 
-          // Get all <a> tags in the parsed document
           let links = doc.querySelectorAll('a');
           
-          // Filter links to include only image files
           links.forEach(link => {
             let href = link.getAttribute('href');
             if (href.endsWith('.jpg') || href.endsWith('.jpeg') || href.endsWith('.png') || href.endsWith('.gif')) {
-              // Construct full path to the image file
               let imagePath = href;
               files.push(imagePath);
             }
           });
 
-          // Load each image file into the imageStack
           files.forEach(file => {
             loadImage(file, img => {
               imageStack.push(img);
@@ -116,7 +111,6 @@
     function shuffleArray(array) {
       for (let i = array.length - 1; i > 0; i--) {
         let index = Math.floor(Math.random() * (i + 1));
-        // Swap array elements
         let temp = array[index];
         array[index] = array[i];
         array[i] = temp;
@@ -134,7 +128,6 @@
           let x = startX + i * squareSize;
           let y = startY + j * squareSize;
           
-          // Draw dotted horizontal and vertical lines
           stroke(0);
           strokeWeight(gridStrokeWeight); 
           
