@@ -79,6 +79,7 @@
 
     // Load all images from the specified folder into the stack
     function loadImagesIntoStack(folder) {
+      print(folder)
       fetch(folder)
         .then(response => response.text())
         .then(data => {
