@@ -26,11 +26,64 @@
       align-items: center;
       height: 100%;
     }
+
+     /* Style for the slider container */
+     #framerate-slider-container {
+      position: absolute;
+      bottom: 20px; 
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+    }
+
+    /* Style for the slider itself */
+    #framerate-slider {
+      width: 80%;
+      max-width: 400px; 
+      -webkit-appearance: none; 
+      appearance: none;
+      background-color: #dddddd;
+      height: 10px; 
+      border-radius: 5px; 
+      outline: none; 
+      opacity: 0.5; 
+      transition: opacity 0.15s ease-in-out; /
+    }
+
+    #framerate-slider:hover,
+    #framerate-slider:focus {
+      opacity: 1; 
+    }
+
+    /* Adjust slider thumb appearance */
+    #framerate-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; 
+      appearance: none;
+      width: 10px; 
+      height: 10px; 
+      border-radius: 50%;
+      background-color: #555555; 
+      cursor: pointer; 
+
+    #framerate-slider::-moz-range-thumb {
+      width: 20px; 
+      height: 20px; 
+      border-radius: 50%; 
+      background-color: black; 
+      cursor: pointer; 
+    }
   </style>
 </head>
 <body>
   <!-- Container for p5.js sketch -->
   <div id="sketch-container"></div>
+
+  <!-- Slider to control frame rate -->
+  <div id="framerate-slider-container">
+    <input type="range" min="1" max="15" value="1" class="slider" id="framerate-slider">
+  </div>
 
   <!-- Script to define p5.js sketch -->
   <script>
@@ -47,6 +100,10 @@
     let repeatImages = true; 
     let availableSquares = []; 
     let frameCounter = 0; 
+
+    // Variables to store frame rate and slider element
+    let customFrameRate = 1; // Default starting frame rate
+    let framerateSlider; // Slider element
 
     let palavrasImages = [
       'data/palavras/abertura.jpg',
@@ -109,6 +166,9 @@
       imageStackCopy = [...imageStack];
       
       frameRate(1); 
+
+      setupSlider();
+
     }
 
     // Load all images from the specified URLs into the stack
@@ -131,6 +191,15 @@
         array[index] = array[i];
         array[i] = temp;
       }
+    }
+
+    // Function to initialize slider and its event listener
+    function setupSlider() {
+      framerateSlider = document.getElementById('framerate-slider');
+      framerateSlider.addEventListener('input', function() {
+        customFrameRate = parseInt(this.value);
+        frameRate(customFrameRate); // Update p5.js frame rate
+      });
     }
 
     function draw() {
@@ -221,6 +290,8 @@
       stroke(255); 
       noFill(); 
       rect(startX, startY, totalGridSize, totalGridSize); 
+
+      frameRate(customFrameRate);
       
     }
     
