@@ -92,6 +92,7 @@
             let href = link.getAttribute('href');
             if (href.endsWith('.jpg') || href.endsWith('.jpeg') || href.endsWith('.png') || href.endsWith('.gif')) {
               let imagePath = href;
+              print(imagePath)
               files.push(imagePath);
             }
           });
