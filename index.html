@@ -48,7 +48,7 @@
 
     let palavrasImages = [
       'data/palavras/abertura.jpg',
-      'data/palavras/abracao.jpg',
+      'data/palavras/abracar.jpg',
       'data/palavras/acaso.jpg',
       'data/palavras/acontecer.jpg',
       'data/palavras/adentrar.jpg',
@@ -109,11 +109,14 @@
       frameRate(1); 
     }
 
-     // Load all images from the specified URLs into the stack
-     function loadImagesIntoStack(images) {
+    // Load all images from the specified URLs into the stack
+    function loadImagesIntoStack(images) {
       images.forEach(url => {
         loadImage(url, img => {
           imageStack.push(img);
+          console.log(`Image loaded successfully: ${url}`);
+        }, () => {
+          console.log(`Failed to load image: ${url}`);
         });
       });
     }
