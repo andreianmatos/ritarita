@@ -1,0 +1,86 @@
+/* Ensure the canvas takes up the whole screen */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Prevent scrollbars */
+    position: relative; /* Needed for button positioning */
+  }
+
+  #sketch-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  /* Style for the slider container */
+  #framerate-slider-container {
+    position: absolute;
+    bottom: 20px; 
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+  }
+
+  /* Style for the slider itself */
+  #framerate-slider {
+    width: 80%;
+    max-width: 400px; 
+    -webkit-appearance: none; 
+    appearance: none;
+    background-color: #dddddd;
+    height: 10px; 
+    border-radius: 5px; 
+    outline: none; 
+    opacity: 0.5; 
+    transition: opacity 0.15s ease-in-out;
+  }
+
+  #framerate-slider:hover,
+  #framerate-slider:focus {
+    opacity: 1; 
+  }
+
+  /* Adjust slider thumb appearance */
+  #framerate-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; 
+    appearance: none;
+    width: 10px; 
+    height: 10px; 
+    border-radius: 50%;
+    background-color: #555555; 
+    cursor: pointer; 
+  }
+
+  #framerate-slider::-moz-range-thumb {
+    width: 20px; 
+    height: 20px; 
+    border-radius: 50%; 
+    background-color: black; 
+    cursor: pointer; 
+  }
+
+  /* Style for the button */
+  #navigate-button {
+    position: absolute;
+    top: 20px; /* Distance from the top edge */
+    left: 20px; /* Distance from the left edge */
+    color: black;
+    background-color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 2; /* Ensure button is above other elements */
+  }
+
+  #navigate-button:hover {
+    background-color: black;
+    color: white;
+  }

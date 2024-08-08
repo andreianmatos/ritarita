@@ -7,74 +7,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
   <link rel="apple-touch-icon" sizes="180x180" href="data/icon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="64x64" href="data/icon/favicon-32x32.png">
-  <link rel="manifest" href="/site.webmanifest">  <style>
-    /* Ensure the canvas takes up the whole screen */
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden; /* Prevent scrollbars */
-    }
-
-    #sketch-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-    }
-
-     /* Style for the slider container */
-     #framerate-slider-container {
-      position: absolute;
-      bottom: 20px; 
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1;
-    }
-
-    /* Style for the slider itself */
-    #framerate-slider {
-      width: 80%;
-      max-width: 400px; 
-      -webkit-appearance: none; 
-      appearance: none;
-      background-color: #dddddd;
-      height: 10px; 
-      border-radius: 5px; 
-      outline: none; 
-      opacity: 0.5; 
-      transition: opacity 0.15s ease-in-out; /
-    }
-
-    #framerate-slider:hover,
-    #framerate-slider:focus {
-      opacity: 1; 
-    }
-
-    /* Adjust slider thumb appearance */
-    #framerate-slider::-webkit-slider-thumb {
-      -webkit-appearance: none; 
-      appearance: none;
-      width: 10px; 
-      height: 10px; 
-      border-radius: 50%;
-      background-color: #555555; 
-      cursor: pointer; 
-
-    #framerate-slider::-moz-range-thumb {
-      width: 20px; 
-      height: 20px; 
-      border-radius: 50%; 
-      background-color: black; 
-      cursor: pointer; 
-    }
-  </style>
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- Container for p5.js sketch -->
@@ -84,6 +18,9 @@
   <div id="framerate-slider-container">
     <input type="range" min="1" max="15" value="1" class="slider" id="framerate-slider">
   </div>
+
+  <!-- Button to navigate to drag.html -->
+  <button id="navigate-button">Xxxx</button>
 
   <!-- Script to define p5.js sketch -->
   <script>
@@ -146,7 +83,6 @@
       loadImagesIntoStack(pedrasImages);
     }
 
-
     function setup() {
       createCanvas(701, 701); // Adjust canvas size
       background(255); 
@@ -169,6 +105,10 @@
 
       setupSlider();
 
+      // Add event listener to the button
+      document.getElementById('navigate-button').addEventListener('click', function() {
+        window.location.href = 'drag.html'; // Redirect to drag.html
+      });
     }
 
     // Load all images from the specified URLs into the stack
@@ -292,9 +232,7 @@
       rect(startX, startY, totalGridSize, totalGridSize); 
 
       frameRate(customFrameRate);
-      
     }
-    
   </script>
 </body>
 </html>
