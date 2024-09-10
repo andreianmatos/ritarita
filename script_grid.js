@@ -79,10 +79,6 @@ frameRate(1);
 
 setupSlider();
 
-// Add event listener to the button
-document.getElementById('navigate-button').addEventListener('click', function() {
-    window.location.href = 'drag.html'; // Redirect to drag.html
-});
 }
 
 // Load all images from the specified URLs into the stack

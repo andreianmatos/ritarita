@@ -11,19 +11,37 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Container for p5.js sketch -->
-  <div id="sketch-container"></div>
-
-  <!-- Slider to control frame rate -->
-  <div id="framerate-slider-container">
-    <input type="range" min="1" max="15" value="1" class="slider" id="framerate-slider">
+  <!-- Button Container -->
+  <div class="button-container" id="button-container">
+    <button id="navigate-grid">1</button>
+    <button id="navigate-drag">2</button>
+    <button id="navigate-dance">3</button>
+    <button id="navigate-draw">4</button>
+    <button id="navigate-stretch">5</button>
   </div>
 
-  <!-- Button to navigate to drag.html -->
-  <button id="navigate-button">Xxxx</button>
-
   <!-- Script to define p5.js sketch -->
-  <script src="script_grid.js"></script>
+  <script src="script.js"></script>
+  <script>
+    document.getElementById('navigate-drag').addEventListener('click', function() {
+      window.location.href = 'drag.html'; // Navigates to drag.html
+    });
 
+    document.getElementById('navigate-grid').addEventListener('click', function() {
+      window.location.href = 'grid.html'; 
+    });
+
+    document.getElementById('navigate-dance').addEventListener('click', function() {
+      window.location.href = 'dance.html'; 
+    });
+
+    document.getElementById('navigate-draw').addEventListener('click', function() {
+      window.location.href = 'draw.html'; 
+    });
+
+    document.getElementById('navigate-stretch').addEventListener('click', function() {
+      window.location.href = 'stretch.html'; 
+    });
+  </script>
 </body>
 </html>
