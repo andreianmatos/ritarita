@@ -101,3 +101,4 @@ class DraggableImage {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
+

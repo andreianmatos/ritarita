@@ -176,3 +176,55 @@ function mouseReleased() {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
+
+function keyPressed() {
+  if (key === 'S' || key === 's') {
+    saveSnapshot();
+  }
+}
+
+function keyPressed() {
+  if (key === 'S' || key === 's') {
+    saveSnapshot();
+  }
+}
+
+function saveSnapshot() {
+  let canvasElement = document.querySelector('canvas');
+  
+  // Convert canvas to blob for upload
+  canvasElement.toBlob(function(blob) {
+    uploadImage(blob); // Upload the blob to Firebase
+  });
+}
+
+// Firebase function to upload the image blob to Firebase Cloud Storage
+function uploadImage(blob) {
+  // Get a reference to the storage service, which is used to create references in your storage bucket
+  const storageRef = firebase.storage().ref();
+  
+  // Create a reference to store the image, e.g., 'images/snapshot-123.png'
+  const fileRef = storageRef.child('images/snapshot-' + Date.now() + '.png');
+  
+  // Upload the image
+  const uploadTask = fileRef.put(blob);
+  
+  uploadTask.on('state_changed', 
+    (snapshot) => {
+      // Observe state change events such as progress, pause, and resume
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log('Upload is ' + progress + '% done');
+    }, 
+    (error) => {
+      // Handle unsuccessful uploads
+      console.error('Error uploading the image:', error);
+    }, 
+    () => {
+      // Handle successful uploads
+      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+        console.log('File available at:', downloadURL);
+        alert('Image uploaded! View it at: ' + downloadURL);
+      });
+    }
+  );
+}
