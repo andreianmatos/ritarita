@@ -196,7 +196,7 @@ function uploadImage(blob) {
   console.log("Uploading to Firebase...");
 
   // Get a reference to the storage service and define where the file will be stored
-  const fileRef = window.firebaseRef(window.firebaseStorage, 'images/snapshot-' + Date.now() + '.png');
+  const fileRef = window.firebaseRef(window.firebaseStorage, 'drag_images/snapshot-' + Date.now() + '.png');
 
   // Start the upload task
   const uploadTask = window.firebaseUploadBytesResumable(fileRef, blob);
@@ -216,8 +216,69 @@ function uploadImage(blob) {
       // Get the download URL after a successful upload
       window.firebaseGetDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
         console.log('File available at:', downloadURL);
-        alert('Image uploaded! View it at: ' + downloadURL);
       });
     }
   );
 }
+
+// Function to fetch image URLs from Firebase Storage
+function fetchImagesFromFirebase() {
+  const storage = window.firebaseStorage; // Get the Firebase storage instance
+  const storageRef = window.firebaseRef(storage, 'drag_images/');
+  
+  // List all items in the storage directory
+  window.firebaseListAll(storageRef).then((result) => {
+      const imagePromises = result.items.map((itemRef) => {
+          return window.firebaseGetDownloadURL(itemRef).then((url) => {
+              return url;
+          });
+      });
+
+      return Promise.all(imagePromises);
+  }).then((urls) => {
+      displayGallery(urls);
+  }).catch((error) => {
+      console.error('Error fetching images from Firebase:', error);
+  });
+}
+
+
+// Function to display the gallery
+function displayGallery(urls) {
+  const galleryContainer = document.createElement('div');
+  galleryContainer.id = 'gallery-container';
+  galleryContainer.style.position = 'fixed';
+  galleryContainer.style.top = '0';
+  galleryContainer.style.left = '0';
+  galleryContainer.style.width = '100%';
+  galleryContainer.style.height = '100%';
+  galleryContainer.style.backgroundColor = 'rgba(0,0,0,0.8)';
+  galleryContainer.style.overflow = 'scroll';
+  galleryContainer.style.zIndex = '1000';
+
+  const closeButton = document.createElement('button');
+  closeButton.innerText = 'Close';
+  closeButton.style.position = 'absolute';
+  closeButton.style.top = '10px';
+  closeButton.style.right = '10px';
+  closeButton.addEventListener('click', () => {
+      document.body.removeChild(galleryContainer);
+  });
+
+  galleryContainer.appendChild(closeButton);
+
+  urls.forEach((url) => {
+      const img = document.createElement('img');
+      img.src = url;
+      img.style.maxWidth = '100%';
+      img.style.height = 'auto';
+      img.style.margin = '10px';
+      galleryContainer.appendChild(img);
+  });
+
+  document.body.appendChild(galleryContainer);
+}
+
+
+// Add event listener to the gallery button
+document.getElementById('gallery-button').addEventListener('click', fetchImagesFromFirebase);
