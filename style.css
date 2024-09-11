@@ -1,126 +1,149 @@
 /* Ensure the canvas takes up the whole screen */
 html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden; /* Prevent scrollbars */
-    position: relative; /* Needed for button positioning */
-  }
-
-  #sketch-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-  }
-
-  /* Style for the slider container */
-  #framerate-slider-container {
-    position: absolute;
-    bottom: 20px; 
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-  }
-
-  /* Style for the slider itself */
-  #framerate-slider {
-    width: 80%;
-    max-width: 400px; 
-    -webkit-appearance: none; 
-    appearance: none;
-    background-color: #dddddd;
-    height: 10px; 
-    border-radius: 5px; 
-    outline: none; 
-    opacity: 0.5; 
-    transition: opacity 0.15s ease-in-out;
-  }
-
-  #framerate-slider:hover,
-  #framerate-slider:focus {
-    opacity: 1; 
-  }
-
-  /* Adjust slider thumb appearance */
-  #framerate-slider::-webkit-slider-thumb {
-    -webkit-appearance: none; 
-    appearance: none;
-    width: 10px; 
-    height: 10px; 
-    border-radius: 50%;
-    background-color: #555555; 
-    cursor: pointer; 
-  }
-
-  #framerate-slider::-moz-range-thumb {
-    width: 20px; 
-    height: 20px; 
-    border-radius: 50%; 
-    background-color: black; 
-    cursor: pointer; 
-  }
-
-  /* Style for the button */
-  .button {
-    position: absolute;
-    top: 20px; /* Distance from the top edge */
-    left: 20px; /* Distance from the left edge */
-    color: black;
-    background-color: white;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    z-index: 2; /* Ensure button is above other elements */
-  }
-
-  .button:hover {
-    background-color: black;
-    color: white;
-  }
-
-  body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .button-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-wrap: wrap;
-    width: 200px; /* Adjust size as needed */
-    height: 200px; /* Adjust size as needed */
-    gap: 10px; /* Space between buttons */
-    justify-content: center;
-    align-items: center;
-    z-index: 1000; /* Ensure buttons are on top */
-    opacity: 0; /* Initially hidden */
-    transition: opacity 1s; /* Fade-in effect */
-  }
-
-  #back-link {
-    text-decoration: none;
-    color: inherit; /* Inherit color from button */
-    font-size: 16px;
-  }
-
-  /* Style the gallery button */
-  #gallery-button {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Prevent scrollbars */
+  position: relative; /* Needed for button positioning */
 }
 
+#sketch-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+/* Style for the slider container */
+#framerate-slider-container {
+  position: absolute;
+  bottom: 20px; 
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+/* Style for the slider itself */
+#framerate-slider {
+  width: 80%;
+  max-width: 400px; 
+  -webkit-appearance: none; 
+  appearance: none;
+  background-color: #dddddd;
+  height: 10px; 
+  border-radius: 5px; 
+  outline: none; 
+  opacity: 0.5; 
+  transition: opacity 0.15s ease-in-out;
+}
+
+#framerate-slider:hover,
+#framerate-slider:focus {
+  opacity: 1; 
+}
+
+/* Adjust slider thumb appearance */
+#framerate-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; 
+  appearance: none;
+  width: 10px; 
+  height: 10px; 
+  border-radius: 50%;
+  background-color: #555555; 
+  cursor: pointer; 
+}
+
+#framerate-slider::-moz-range-thumb {
+  width: 20px; 
+  height: 20px; 
+  border-radius: 50%; 
+  background-color: black; 
+  cursor: pointer; 
+}
+
+/* Style for the buttons */
+.button {
+  position: absolute;
+  color: black;
+  background-color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 2; /* Ensure button is above other elements */
+}
+
+.button:hover {
+  background-color: black;
+  color: white;
+}
+
+#back-button {
+  top: 20px; /* Distance from the top edge */
+  left: 20px; /* Distance from the left edge */
+  text-align: center; /* Center text */
+}
+
+#gallery-button {
+  top: 20px; /* Distance from the top edge */
+  right: 20px; /* Distance from the right edge */
+  background-color: #ffffff; /* Background color for visibility */
+  text-align: center; /* Center text */
+}
+
+#gallery-button:hover {
+  background-color: #000000; /* Change background color on hover */
+  color: #ffffff; /* Change text color on hover */
+}
+
+#gallery-close {
+  top: 20px; /* Distance from the top edge */
+  right: 20px;  /* Use right: 10px to position in the top-right corner */
+  z-index: 1001; /* Ensure the close button is above the gallery content */
+}
+
+.button-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-wrap: wrap;
+  width: 200px; /* Adjust size as needed */
+  height: 200px; /* Adjust size as needed */
+  gap: 10px; /* Space between buttons */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure buttons are on top */
+  opacity: 0; /* Initially hidden */
+  transition: opacity 1s; /* Fade-in effect */
+}
+
+#back-link {
+  text-decoration: none;
+  color: inherit; /* Inherit color from button */
+  font-size: 16px;
+}
+
+/* Gallery styling */
 #gallery-container img {
   width: 20%;
   height: auto;
   margin: 10px;
+}
+
+.gallery-container {
+  position: fixed;
+  top: 0;
+  right: 0; /* Align with top-right corner */
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  overflow: scroll;
+  z-index: 1000;
 }

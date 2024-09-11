@@ -246,21 +246,13 @@ function fetchImagesFromFirebase() {
 // Function to display the gallery
 function displayGallery(urls) {
   const galleryContainer = document.createElement('div');
+  galleryContainer.classList.add('gallery-container');
   galleryContainer.id = 'gallery-container';
-  galleryContainer.style.position = 'fixed';
-  galleryContainer.style.top = '0';
-  galleryContainer.style.left = '0';
-  galleryContainer.style.width = '100%';
-  galleryContainer.style.height = '100%';
-  galleryContainer.style.backgroundColor = 'rgba(0,0,0,0.8)';
-  galleryContainer.style.overflow = 'scroll';
-  galleryContainer.style.zIndex = '1000';
 
   const closeButton = document.createElement('button');
-  closeButton.innerText = 'Close';
-  closeButton.style.position = 'absolute';
-  closeButton.style.top = '10px';
-  closeButton.style.right = '10px';
+  closeButton.classList.add('button');
+  closeButton.id = 'gallary-close';
+  closeButton.innerText = 'X';
   closeButton.addEventListener('click', () => {
       document.body.removeChild(galleryContainer);
   });
