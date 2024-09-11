@@ -183,51 +183,23 @@ function keyPressed() {
   }
 }
 
-function keyPressed() {
-  if (key === 'S' || key === 's') {
-    saveSnapshot();
-  }
-}
-
 function saveSnapshot() {
   let canvasElement = document.querySelector('canvas');
   
   // Convert canvas to blob for upload
   canvasElement.toBlob(function(blob) {
-    uploadImage(blob); // Upload the blob to Firebase
-  });
-}
-
-// Import Firebase functions
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js";
-
-// Save the snapshot when 'S' is pressed
-function keyPressed() {
-  if (key === 'S' || key === 's') {
-    saveSnapshot();
-  }
-}
-
-// Convert the canvas to a blob and upload it to Firebase Cloud Storage
-function saveSnapshot() {
-  let canvasElement = document.querySelector('canvas');
-  
-  // Convert canvas to a blob for upload
-  canvasElement.toBlob(function(blob) {
     uploadImage(blob); // Call uploadImage to upload the blob
   });
 }
 
-// Function to upload the blob to Firebase Cloud Storage
 function uploadImage(blob) {
   console.log("Uploading to Firebase...");
 
   // Get a reference to the storage service and define where the file will be stored
-  const storage = getStorage(); // Ensure that Firebase Storage is initialized
-  const fileRef = ref(storage, 'images/snapshot-' + Date.now() + '.png');
+  const fileRef = window.firebaseRef(window.firebaseStorage, 'images/snapshot-' + Date.now() + '.png');
 
   // Start the upload task
-  const uploadTask = uploadBytesResumable(fileRef, blob);
+  const uploadTask = window.firebaseUploadBytesResumable(fileRef, blob);
 
   // Monitor the upload status
   uploadTask.on('state_changed', 
@@ -242,7 +214,7 @@ function uploadImage(blob) {
     }, 
     () => {
       // Get the download URL after a successful upload
-      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+      window.firebaseGetDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
         console.log('File available at:', downloadURL);
         alert('Image uploaded! View it at: ' + downloadURL);
       });

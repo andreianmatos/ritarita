@@ -2,15 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>drag</title>
+    <title>Drag and Drop Images</title>
     <!-- Include p5.js library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <!-- Firebase App (the core Firebase SDK) -->
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app.js"></script>
-    <!-- Firebase Authentication (optional, for authentication) -->
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js"></script>
     <!-- Firebase Cloud Storage -->
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js"></script>
     <link rel="apple-touch-icon" sizes="180x180" href="data/icon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="64x64" href="data/icon/favicon-32x32.png">
     <link rel="manifest" href="/site.webmanifest">  
@@ -28,15 +26,11 @@
     <!-- Script to define p5.js sketch -->
     <script src="script_drag.js"></script>
 
+    <!-- Firebase Initialization -->
     <script type="module">
-        // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-analytics.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-      
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js";
+        
         const firebaseConfig = {
           apiKey: "AIzaSyBhtqmYExOyuCLvIkKn7vCFINl78_9zxnk",
           authDomain: "a-de-99abe.firebaseapp.com",
@@ -46,10 +40,16 @@
           appId: "1:1053333220394:web:315d8b3e9b8a260cb52753",
           measurementId: "G-37J9YQ0RS1"
         };
-      
+
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-      </script>
+        const storage = getStorage(app);
+
+        // Make Firebase storage functions available globally
+        window.firebaseStorage = storage;
+        window.firebaseRef = ref;
+        window.firebaseUploadBytesResumable = uploadBytesResumable;
+        window.firebaseGetDownloadURL = getDownloadURL;
+    </script>
 </body>
 </html>
