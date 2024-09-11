@@ -260,15 +260,6 @@ function displayGallery(urls) {
   galleryContainer.appendChild(closeButton);
 
   urls.forEach((url) => {
-      const img = document.createElement('img');
-      img.src = url;
-      img.style.maxWidth = '100%';
-      img.style.height = 'auto';
-      img.style.margin = '10px';
-      galleryContainer.appendChild(img);
-  });
-
-  urls.forEach((url) => {
     // Create a clickable anchor tag
     const anchor = document.createElement('a');
     anchor.href = url;
