@@ -198,30 +198,51 @@ function saveSnapshot() {
   });
 }
 
-// Firebase function to upload the image blob to Firebase Cloud Storage
+// Import Firebase functions
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js";
+
+// Save the snapshot when 'S' is pressed
+function keyPressed() {
+  if (key === 'S' || key === 's') {
+    saveSnapshot();
+  }
+}
+
+// Convert the canvas to a blob and upload it to Firebase Cloud Storage
+function saveSnapshot() {
+  let canvasElement = document.querySelector('canvas');
+  
+  // Convert canvas to a blob for upload
+  canvasElement.toBlob(function(blob) {
+    uploadImage(blob); // Call uploadImage to upload the blob
+  });
+}
+
+// Function to upload the blob to Firebase Cloud Storage
 function uploadImage(blob) {
-  // Get a reference to the storage service, which is used to create references in your storage bucket
-  const storageRef = firebase.storage().ref();
-  
-  // Create a reference to store the image, e.g., 'images/snapshot-123.png'
-  const fileRef = storageRef.child('images/snapshot-' + Date.now() + '.png');
-  
-  // Upload the image
-  const uploadTask = fileRef.put(blob);
-  
+  console.log("Uploading to Firebase...");
+
+  // Get a reference to the storage service and define where the file will be stored
+  const storage = getStorage(); // Ensure that Firebase Storage is initialized
+  const fileRef = ref(storage, 'images/snapshot-' + Date.now() + '.png');
+
+  // Start the upload task
+  const uploadTask = uploadBytesResumable(fileRef, blob);
+
+  // Monitor the upload status
   uploadTask.on('state_changed', 
     (snapshot) => {
-      // Observe state change events such as progress, pause, and resume
+      // Get upload progress in percentage
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       console.log('Upload is ' + progress + '% done');
     }, 
     (error) => {
-      // Handle unsuccessful uploads
+      // Handle upload errors
       console.error('Error uploading the image:', error);
     }, 
     () => {
-      // Handle successful uploads
-      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+      // Get the download URL after a successful upload
+      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
         console.log('File available at:', downloadURL);
         alert('Image uploaded! View it at: ' + downloadURL);
       });
