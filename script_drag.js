@@ -268,6 +268,24 @@ function displayGallery(urls) {
       galleryContainer.appendChild(img);
   });
 
+  urls.forEach((url) => {
+    // Create a clickable anchor tag
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.target = '_blank'; // Open in a new tab
+
+    const img = document.createElement('img');
+    img.src = url;
+    img.style.maxWidth = '100%';
+    img.style.height = 'auto';
+    img.style.margin = '10px';
+
+    // Append image to the anchor
+    anchor.appendChild(img);
+    // Append anchor to the gallery container
+    galleryContainer.appendChild(anchor);
+  });
+
   document.body.appendChild(galleryContainer);
 }
 
