@@ -102,15 +102,20 @@ html, body {
 }
 
 #gallery-close {
-  top: 20px; /* Distance from the top edge */
-  right: 20px; /* Distance from the right edge */
-  background-color: #ffffff; /* Background color for visibility */
-  text-align: center; /* Center text */
-  z-index: 1001; /* Ensure the close button is above the gallery content */
+  position: absolute;
+  top: 20px;  /* Same distance from the top edge as the gallery button */
+  right: 20px;  /* Same distance from the right edge as the gallery button */
+  background-color: #ffffff;  /* Background color for visibility */
+  text-align: center;  /* Center the text inside the button */
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;  /* Ensure it is above the gallery content */
 }
 
 #gallery-close:hover {
-  background-color: rgba(0, 0, 0, 0.5); /* Slight background color on hover */
+  background-color: rgba(0, 0, 0, 0.5);  /* Change background color on hover */
+  color: #ffffff;  /* Change text color on hover */
 }
 
 .button-container {
@@ -153,3 +158,4 @@ html, body {
   overflow: hide;
   z-index: 1000;
 }
+
