@@ -267,7 +267,7 @@ function displayGallery(urls) {
 
     const img = document.createElement('img');
     img.src = url;
-    img.style.maxWidth = '100%';
+    img.style.maxWidth = '10%';
     img.style.height = 'auto';
     img.style.margin = '10px';
 
