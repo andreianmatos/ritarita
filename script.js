@@ -67,45 +67,143 @@ function moveRock() {
 // Check if the rock collides with any button
 function checkCollision() {
   buttons.forEach(button => {
-    // Adjust collision detection to check if the rock is within the button's area
-    if (rockX + rockWidth * 0.5 > button.x &&
-        rockX + rockWidth * 0.5 < button.x + button.width &&
-        rockY + rockHeight * 0.5 > button.y &&
-        rockY + rockHeight * 0.5 < button.y + button.height) {
-      // Collision detected (rock overlaps with button)
+    if (
+      rockX + rockWidth * 0.5 > button.x &&
+      rockX + rockWidth * 0.5 < button.x + button.width &&
+      rockY + rockHeight * 0.5 > button.y &&
+      rockY + rockHeight * 0.5 < button.y + button.height
+    ) {
       button.action();  // Trigger the button's action (open a page)
     }
   });
 }
 
-// Draw spiral lines instead of rectangles
+// Detect mouse clicks on spiral buttons and trigger navigation
+function mousePressed() {
+  buttons.forEach(button => {
+    if (
+      mouseX > button.x &&
+      mouseX < button.x + button.width &&
+      mouseY > button.y &&
+      mouseY < button.y + button.height
+    ) {
+      button.action();  // Trigger navigation when clicked
+    }
+  });
+}
+
+// Function to draw randomized spiral or abstract shape
+function drawRandomShape(x, y, width, height) {
+  noFill();
+  stroke(0);
+  strokeWeight(2);
+
+  let shapeType = floor(random(3));  // Randomly choose a shape type (0 = spiral, 1 = ellipse, 2 = waves)
+
+  if (shapeType === 0) {
+    // Spiral with random parameters
+    let angle = 0;
+    let radius = min(width, height) / 2;
+    let angleIncrement = random(0.05, 0.2);  // Vary tightness of the spiral
+    let radiusDecrement = random(3, 10);  // Vary how fast it contracts
+
+    beginShape();
+    while (radius > 0) {
+      let sx = x + radius * cos(angle);
+      let sy = y + radius * sin(angle);
+      vertex(sx, sy);
+      angle += angleIncrement;
+      radius -= radiusDecrement;
+    }
+    endShape();
+  } else if (shapeType === 1) {
+    // Ellipse shape with slight distortion
+    let distortion = random(10, 50);
+    ellipse(x, y, width + distortion, height - distortion);
+  } else {
+    // Wavy line pattern
+    let waveHeight = random(10, 30);
+    let waveCount = floor(random(3, 8));
+    beginShape();
+    for (let i = 0; i < waveCount; i++) {
+      let wx = x + i * (width / waveCount);
+      let wy = y + sin(i * 0.5) * waveHeight;
+      vertex(wx, wy);
+    }
+    endShape();
+  }
+}
+
+// Display the buttons on the screen with random shapes
+function displayButtons() {
+  buttons.forEach(button => {
+    drawRandomShape(button.x + button.width / 2, button.y + button.height / 2, button.width, button.height);
+  });
+}
+
+
+
+// Display the buttons on the screen (using spiral lines)
+function displayButtons() {
+  let hovering = false;  // Track if the mouse is over any button
+
+  buttons.forEach(button => {
+    drawSpiral(button.x, button.y, button.width, button.height);
+
+    // Check if mouse is over the spiral button
+    if (
+      mouseX > button.x &&
+      mouseX < button.x + button.width &&
+      mouseY > button.y &&
+      mouseY < button.y + button.height
+    ) {
+      hovering = true;
+    }
+  });
+
+  // Change cursor to pointer if hovering over any button
+  if (hovering) {
+    cursor(HAND);
+  } else {
+    cursor(ARROW);
+  }
+}
+
+// Detect mouse clicks on spiral buttons and trigger navigation
+function mousePressed() {
+  buttons.forEach(button => {
+    if (
+      mouseX > button.x &&
+      mouseX < button.x + button.width &&
+      mouseY > button.y &&
+      mouseY < button.y + button.height
+    ) {
+      button.action();  // Trigger navigation when clicked
+    }
+  });
+}
+
+// Function to draw spiral button with clickability
 function drawSpiral(x, y, width, height) {
   noFill();
   stroke(0);
   strokeWeight(2);
-  
+
   let angle = 0;
   let radius = min(width, height) / 2;
-  let angleIncrement = 0.1;  // Controls the tightness of the spiral
-  let radiusIncrement = radius / (TWO_PI / angleIncrement);  // Determines how quickly the spiral expands
-  
+  let angleIncrement = 0.1;
+  let radiusIncrement = radius / (TWO_PI / angleIncrement);
+
   beginShape();
   while (radius > 0) {
     let sx = x + radius * cos(angle);
     let sy = y + radius * sin(angle);
     vertex(sx, sy);
-    
+
     angle += angleIncrement;
     radius -= radiusIncrement;
   }
   endShape();
-}
-
-// Display the buttons on the screen (using spiral lines)
-function displayButtons() {
-  buttons.forEach(button => {
-    drawSpiral(button.x, button.y, button.width, button.height);  // Draw the spiral line as the button
-  });
 }
 
 // Check if the initial position of the rock collides with any button
@@ -127,10 +225,7 @@ function createSpiralButtons() {
   let angleIncrement = TWO_PI / 6;  // Angle between each button
   let radiusIncrement = 150;    // Distance between successive buttons in the spiral
   
-  // Define margin to keep buttons away from the edges
   let margin = 50;  // Margin in pixels
-  
-  // Ensure that the initial radius and spacing keep buttons within the canvas with margin
   let maxRadius = Math.min(width, height) / 2 - Math.max(buttonWidth, buttonHeight) / 2 - margin;
   let radius = maxRadius;
 
@@ -180,7 +275,6 @@ function createSpiralButtons() {
     radius += radiusIncrement;
   }
 }
-
 
 // Action triggered to navigate to a page
 function navigateTo(url) {

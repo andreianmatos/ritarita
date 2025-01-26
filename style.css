@@ -101,7 +101,7 @@ html, body {
   color: #ffffff; /* Change text color on hover */
 }
 
-#gallery-close {
+.gallery-close {
   position: absolute;
   top: 20px;  /* Same distance from the top edge as the gallery button */
   right: 20px;  /* Same distance from the right edge as the gallery button */
@@ -113,7 +113,7 @@ html, body {
   z-index: 1001;  /* Ensure it is above the gallery content */
 }
 
-#gallery-close:hover {
+.gallery-close:hover {
   background-color: rgba(0, 0, 0, 0.5);  /* Change background color on hover */
   color: #ffffff;  /* Change text color on hover */
 }
@@ -142,20 +142,16 @@ html, body {
 }
 
 /* Gallery styling */
-#gallery-container img {
-  width: 20%;
-  height: auto;
-  margin: 10px;
-}
 
 .gallery-container {
   position: fixed;
-  top: 0;
+  top: 0%;
   right: 0; /* Align with top-right corner */
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
-  overflow: hide;
+  overflow-y: auto;
   z-index: 1000;
 }
+
 

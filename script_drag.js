@@ -241,23 +241,29 @@ function fetchImagesFromFirebase() {
       console.error('Error fetching images from Firebase:', error);
   });
 }
-
-
 // Function to display the gallery
 function displayGallery(urls) {
   const galleryContainer = document.createElement('div');
   galleryContainer.classList.add('gallery-container');
   galleryContainer.id = 'gallery-container';
 
+
+  // Wrapper for the close button to ensure layout
+  const closeWrapper = document.createElement('div');
+  closeWrapper.classList.add('close-wrapper');
+
+
+  // Create a close button
   const closeButton = document.createElement('button');
-  closeButton.classList.add('button');
-  closeButton.id = 'gallary-close';
+  closeButton.classList.add('gallery-close');
   closeButton.innerText = 'X';
   closeButton.addEventListener('click', () => {
       document.body.removeChild(galleryContainer);
   });
 
-  galleryContainer.appendChild(closeButton);
+  // Create an image wrapper to ensure images start below the close button
+  const imageWrapper = document.createElement('div');
+  imageWrapper.classList.add('gallery-images');
 
   urls.forEach((url) => {
     // Create a clickable anchor tag
@@ -267,15 +273,19 @@ function displayGallery(urls) {
 
     const img = document.createElement('img');
     img.src = url;
-    img.style.maxWidth = '10%';
+    img.style.maxWidth = '15%';
     img.style.height = 'auto';
     img.style.margin = '10px';
 
     // Append image to the anchor
     anchor.appendChild(img);
-    // Append anchor to the gallery container
-    galleryContainer.appendChild(anchor);
+    // Append anchor to the image wrapper
+    imageWrapper.appendChild(anchor);
   });
+
+  // Append elements to the gallery container
+  galleryContainer.appendChild(closeButton);
+  galleryContainer.appendChild(imageWrapper);
 
   document.body.appendChild(galleryContainer);
 }
